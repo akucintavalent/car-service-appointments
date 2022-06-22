@@ -22,6 +22,7 @@ const Appointment = sequelize.define('appointment', {
         }
       },
     },
+    unique: true,
   },
   endDateTime: {
     type: Sequelize.DATE,
@@ -36,6 +37,7 @@ const Appointment = sequelize.define('appointment', {
         }
       },
     },
+    unique: true,
   },
   reason: {
     type: Sequelize.TEXT,

@@ -17,8 +17,8 @@ Appointment.belongsTo(ClientGuest);
 ClientGuest.hasOne(Appointment);
 
 sequelize
-  // .sync({ force: true })
-  .sync()
+  .sync({ force: true })
+  // .sync()
   .then(() => {
     app.listen(3000);
   })
