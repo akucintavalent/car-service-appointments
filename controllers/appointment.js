@@ -9,10 +9,17 @@ exports.postAppointment = (req, res) => {
     appointmentTimeStart,
   } = req.body;
   ClientGuest
-    .create({
-      firstName,
-      lastName,
-      phoneNumber,
+    .findOne({ where: { firstName, lastName, phoneNumber } })
+    .then((client) => {
+      if (client) {
+        return client;
+      }
+      return ClientGuest
+        .create({
+          firstName,
+          lastName,
+          phoneNumber,
+        });
     })
     .then((client) => client.createAppointment({
       startDateTime: appointmentTimeStart,
