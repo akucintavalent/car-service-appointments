@@ -10,10 +10,12 @@ exports.postAppointment = (req, res) => {
     reason,
     appointmentTimeStart,
   } = req.body;
+  let clientExisted = false;
   ClientGuest
     .findOne({ where: { firstName, lastName, phoneNumber } })
     .then((client) => {
       if (client) {
+        clientExisted = true;
         return client;
       }
       return ClientGuest
@@ -33,7 +35,9 @@ exports.postAppointment = (req, res) => {
         appointment,
       });
     }).catch((err) => {
-      client.destroy();
+      if (!clientExisted) {
+        client.destroy();
+      }
       res.status(500).json({
         message: err.message,
       });
