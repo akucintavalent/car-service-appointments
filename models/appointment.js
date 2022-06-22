@@ -20,7 +20,10 @@ const Appointment = sequelize.define('appointment', {
   reason: {
     type: Sequelize.TEXT,
     allowNull: false,
-  }
+    validate: {
+      len: [10, 10000],
+    },
+  },
 });
 
 module.exports = Appointment;
