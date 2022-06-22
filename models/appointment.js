@@ -29,6 +29,11 @@ const Appointment = sequelize.define('appointment', {
             }
           });
       },
+      hasPassed(value) {
+        if (new Date(value) < new Date()) {
+          throw new Error('cannot create an appointment for a timeslot that has passed');
+        }
+      },
     },
   },
   endDateTime: {
