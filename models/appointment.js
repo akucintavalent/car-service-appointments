@@ -21,8 +21,15 @@ const Appointment = sequelize.define('appointment', {
           throw new Error('startDateTime\'s time must have format hh:00:00 or hh:30:00');
         }
       },
+      isUnique(value) {
+        return Appointment.findOne({ where: { startDateTime: new Date(value) } })
+          .then((appointment) => {
+            if (appointment) {
+              throw new Error('this startDateTime is already taken');
+            }
+          });
+      },
     },
-    unique: true,
   },
   endDateTime: {
     type: Sequelize.DATE,
@@ -36,8 +43,15 @@ const Appointment = sequelize.define('appointment', {
           throw new Error('startDateTime\'s time must have format hh:00:00 or hh:30:00');
         }
       },
+      isUnique(value) {
+        return Appointment.findOne({ where: { endDateTime: new Date(value) } })
+          .then((appointment) => {
+            if (appointment) {
+              throw new Error('this endDateTime is already taken');
+            }
+          });
+      },
     },
-    unique: true,
   },
   reason: {
     type: Sequelize.TEXT,
