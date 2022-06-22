@@ -13,21 +13,21 @@ const ClientGuest = sequelize.define('clientGuest', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      is: /^[a-zA-Z]+$/i
+      is: /^[a-zA-Z]+$/i,
     },
   },
   lastName: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      is: /^[a-zA-Z]+$/i
+      is: /^[a-zA-Z]+$/i,
     },
   },
   phoneNumber: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      is: /^[\+]?\d{6,12}$/g
+      is: /^[+]?\d{6,12}$/g,
     },
   },
 });

@@ -12,19 +12,17 @@ app.use((req, res, next) => {
     .create({
       firstName: 'Bohdan',
       lastName: 'Shcherbak',
-      phoneNumber: '+489395839204'
+      phoneNumber: '+489395839204',
     })
-    .then(client => {
-      return client.createAppointment({
-        startDateTime: new Date(),
-        endDateTime: new Date(),
-        reason: 'Something went wrong. It seems to me like blah blah.',
-      })
-    })
-    .then(appointment => console.log(appointment))
-    .catch(err => console.log(err));
+    .then((client) => client.createAppointment({
+      startDateTime: new Date(),
+      endDateTime: new Date(),
+      reason: 'Something went wrong. It seems to me like blah blah.',
+    }))
+    .then((appointment) => console.log(appointment))
+    .catch((err) => console.log(err));
   next();
-})
+});
 
 Appointment.belongsTo(ClientGuest);
 ClientGuest.hasOne(Appointment);
@@ -32,7 +30,7 @@ ClientGuest.hasOne(Appointment);
 sequelize
   // .sync({ force: true })
   .sync()
-  .then(result => {
+  .then(() => {
     app.listen(3000);
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
