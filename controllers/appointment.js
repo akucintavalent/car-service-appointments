@@ -1,18 +1,32 @@
 const ClientGuest = require('../models/client-guest');
 
-exports.postAppointment = (req, res, next) => {
+exports.postAppointment = (req, res) => {
+  const {
+    firstName,
+    lastName,
+    phoneNumber,
+    reason,
+    appointmentTimeStart,
+  } = req.body;
   ClientGuest
     .create({
-      firstName: 'Bohdan',
-      lastName: 'Shcherbak',
-      phoneNumber: '+489395839204',
+      firstName,
+      lastName,
+      phoneNumber,
     })
     .then((client) => client.createAppointment({
-      startDateTime: '2022-10-10 13:13:13',
-      endDateTime: '2022-10-10 13:13:13',
-      reason: 'Something went wrong. It seems to me like blah blah.',
+      startDateTime: appointmentTimeStart,
+      endDateTime: new Date(new Date(appointmentTimeStart).getTime() + 30 * 60 * 1000),
+      reason,
+    }).then((appointment) => {
+      res.status(200).json({
+        client,
+        appointment,
+      });
     }))
-    .then((appointment) => console.log(appointment))
-    .catch((err) => console.log(err));
-  next();
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
 };

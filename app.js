@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
 const Appointment = require('./models/appointment');
@@ -7,6 +8,8 @@ const ClientGuest = require('./models/client-guest');
 const app = express();
 
 const appointmentRoutes = require('./routes/appointment');
+
+app.use(bodyParser.json());
 
 app.use('/api/appointments', appointmentRoutes.routes);
 
