@@ -30,7 +30,7 @@ exports.postAppointment = (req, res) => {
       endDateTime: new Date(new Date(appointmentTimeStart).getTime() + 30 * 60 * 1000),
       reason,
     }).then((appointment) => {
-      res.status(200).json({
+      res.status(201).json({
         client,
         appointment,
       });
@@ -38,12 +38,12 @@ exports.postAppointment = (req, res) => {
       if (!clientExisted) {
         client.destroy();
       }
-      res.status(500).json({
+      res.status(422).json({
         message: err.message,
       });
     }))
     .catch((err) => {
-      res.status(500).json({
+      res.status(422).json({
         message: err.message,
       });
     });
