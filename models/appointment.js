@@ -17,6 +17,10 @@ const Appointment = sequelize.define('appointment', {
     type: Sequelize.DATE,
     allowNull: false,
   },
+  reason: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+  }
 });
 
 module.exports = Appointment;
