@@ -40,7 +40,7 @@ const Appointment = sequelize.define('appointment', {
         if (!(date.getMilliseconds() === 0
             && date.getSeconds() === 0
             && (date.getMinutes() === 0 || date.getMinutes() === 30))) {
-          throw new Error('startDateTime\'s time must have format hh:00:00 or hh:30:00');
+          throw new Error('endDateTime\'s time must have format hh:00:00 or hh:30:00');
         }
       },
       isUnique(value) {
