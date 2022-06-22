@@ -14,4 +14,10 @@ app.use((req, res, next) => {
 Appointment.belongsTo(ClientGuest);
 ClientGuest.hasOne(Appointment);
 
-app.listen(3000);
+sequelize
+  .sync({ force: true })
+  // .sync()
+  .then(result => {
+    app.listen(3000);
+  })
+  .catch(err => console.log(err));
