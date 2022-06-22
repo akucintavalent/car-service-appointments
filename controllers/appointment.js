@@ -32,6 +32,11 @@ exports.postAppointment = (req, res) => {
         client,
         appointment,
       });
+    }).catch((err) => {
+      client.destroy();
+      res.status(500).json({
+        message: err.message,
+      });
     }))
     .catch((err) => {
       res.status(500).json({
@@ -69,9 +74,7 @@ exports.getFreeTimeslots = (req, res) => {
           new Date(new Date(currentDay).getTime() + i * 30 * 60 * 1000).toISOString(),
         );
       }
-      console.log('allStartDateTimes', allStartDateTimes);
       takenStartDateTimes.forEach((startDateTime) => allStartDateTimes.delete(startDateTime));
-      console.log('allStartDateTimes', allStartDateTimes);
       const freeSlots = Array.from(allStartDateTimes)
         .map((startDateTime) => ({
           startDateTime,
