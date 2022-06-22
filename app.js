@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
 const Appointment = require('./models/appointment');
@@ -6,30 +7,18 @@ const ClientGuest = require('./models/client-guest');
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('handling http request...');
-  ClientGuest
-    .create({
-      firstName: 'Bohdan',
-      lastName: 'Shcherbak',
-      phoneNumber: '+489395839204',
-    })
-    .then((client) => client.createAppointment({
-      startDateTime: new Date(),
-      endDateTime: new Date(),
-      reason: 'Something went wrong. It seems to me like blah blah.',
-    }))
-    .then((appointment) => console.log(appointment))
-    .catch((err) => console.log(err));
-  next();
-});
+const appointmentRoutes = require('./routes/appointment');
+
+app.use(bodyParser.json());
+
+app.use('/api/appointments', appointmentRoutes.routes);
 
 Appointment.belongsTo(ClientGuest);
 ClientGuest.hasOne(Appointment);
 
 sequelize
-  // .sync({ force: true })
-  .sync()
+  .sync({ force: true })
+  // .sync()
   .then(() => {
     app.listen(3000);
   })
