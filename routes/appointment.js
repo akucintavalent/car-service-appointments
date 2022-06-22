@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post('/create-guest-appointment', appointmentController.postAppointment);
 
+router.get('/find-free-timeslots', appointmentController.getFreeTimeslots);
+
 exports.routes = router;
