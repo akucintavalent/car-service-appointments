@@ -53,7 +53,7 @@ exports.getFreeTimeslots = (req, res) => {
   const { day } = req.query;
   const currentDay = `${day}T00:00:00.000Z`;
   const nextDayDatetime = new Date(new Date(day) + 24 * 60 * 60 * 1000);
-  const nextDay = `${nextDayDatetime.getFullYear()}-${nextDayDatetime.getMonth() + 1}-${nextDayDatetime.getDate() + 1}T00:00:00.000Z`;
+  const nextDay = `${nextDayDatetime.getFullYear()}-${nextDayDatetime.getMonth() + 1 >= 10 ? nextDayDatetime.getMonth() + 1 : `0${nextDayDatetime.getMonth() + 1}`}-${nextDayDatetime.getDate() + 1 >= 10 ? nextDayDatetime.getDate() + 1 : `0${nextDayDatetime.getDate() + 1}`}T00:00:00.000Z`;
   Appointment
     .findAll({
       where: {
