@@ -7,6 +7,8 @@ const ClientGuest = require('./models/client-guest');
 
 const app = express();
 
+require('dotenv').config();
+
 const appointmentRoutes = require('./routes/appointment');
 
 app.use(bodyParser.json());
@@ -27,6 +29,9 @@ sequelize
   .sync({ force: true })
   // .sync()
   .then(() => {
-    app.listen(3000);
+    const PORT = process.env.NODE_DOCKER_PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}.`);
+    });
   })
   .catch((err) => console.log(err));
