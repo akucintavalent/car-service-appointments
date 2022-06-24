@@ -25,13 +25,17 @@ app.use('/api/appointments', appointmentRoutes.routes);
 Appointment.belongsTo(ClientGuest);
 ClientGuest.hasOne(Appointment);
 
-sequelize
-  .sync({ force: true })
-  // .sync()
-  .then(() => {
-    const PORT = process.env.NODE_DOCKER_PORT || 8080;
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}.`);
-    });
-  })
-  .catch((err) => console.log(err));
+module.exports = new Promise((resolve, reject) => {
+  sequelize
+    .sync({ force: true })
+    // .sync()
+    .then(() => {
+      const PORT = process.env.NODE_DOCKER_PORT || 8080;
+      const server = app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}.`);
+        resolve(server);
+      });
+      resolve(server);
+    })
+    .catch((err) => reject(err));
+});
